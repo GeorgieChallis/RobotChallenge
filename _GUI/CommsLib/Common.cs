@@ -38,6 +38,7 @@ namespace CommsLib
         MagDATABufferPacketY = 0x8A,
         MagDATABufferPacketZ = 0x8B,
         DRIVE_MAX_SPEED = 0xC8,
-        MotorSpeedClosed = 0x38 //closed loop motor speed 
+        MotorSpeedClosed = 0x38, //closed loop motor speed 
+        PowerSwitch = 0x15, //Turn servo power on or off
     };
 }

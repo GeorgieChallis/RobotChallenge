@@ -66,6 +66,7 @@ namespace Comms
             this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.timer3 = new System.Windows.Forms.Timer(this.components);
+            this.button7 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -283,7 +284,7 @@ namespace Comms
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(573, 177);
+            this.button2.Location = new System.Drawing.Point(216, 19);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(145, 38);
             this.button2.TabIndex = 11;
@@ -293,7 +294,7 @@ namespace Comms
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(573, 221);
+            this.button3.Location = new System.Drawing.Point(367, 19);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(145, 38);
             this.button3.TabIndex = 12;
@@ -303,7 +304,7 @@ namespace Comms
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(573, 265);
+            this.button4.Location = new System.Drawing.Point(216, 63);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(145, 38);
             this.button4.TabIndex = 13;
@@ -313,7 +314,7 @@ namespace Comms
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(573, 309);
+            this.button5.Location = new System.Drawing.Point(367, 63);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(145, 38);
             this.button5.TabIndex = 14;
@@ -323,9 +324,9 @@ namespace Comms
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(573, 353);
+            this.button6.Location = new System.Drawing.Point(287, 108);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(145, 60);
+            this.button6.Size = new System.Drawing.Size(145, 44);
             this.button6.TabIndex = 15;
             this.button6.Text = "STOP";
             this.button6.UseVisualStyleBackColor = true;
@@ -379,7 +380,12 @@ namespace Comms
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.button1);
+            this.groupBox6.Controls.Add(this.button6);
             this.groupBox6.Controls.Add(this.textBox1);
+            this.groupBox6.Controls.Add(this.button2);
+            this.groupBox6.Controls.Add(this.button4);
+            this.groupBox6.Controls.Add(this.button5);
+            this.groupBox6.Controls.Add(this.button3);
             this.groupBox6.Controls.Add(this.label11);
             this.groupBox6.Location = new System.Drawing.Point(12, 255);
             this.groupBox6.Name = "groupBox6";
@@ -411,19 +417,25 @@ namespace Comms
             // 
             this.timer3.Tick += new System.EventHandler(this.timer3_Tick);
             // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(588, 168);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(94, 46);
+            this.button7.TabIndex = 22;
+            this.button7.Text = "Move Pen";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(762, 435);
+            this.ClientSize = new System.Drawing.Size(762, 419);
+            this.Controls.Add(this.button7);
             this.Controls.Add(this.groupBox6);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.groupBox5);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button4);
             this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.button5);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -489,6 +501,7 @@ namespace Comms
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Timer timer3;
+        private System.Windows.Forms.Button button7;
     }
 }
 

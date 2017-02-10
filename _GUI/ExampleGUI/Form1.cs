@@ -315,6 +315,13 @@ namespace Comms
             distanceValue = int.Parse(textBox1.Text);
         }
 
+        private void button7_Click(object sender, EventArgs e)
+        {
+            if (!myClient.isConnected) return;
+            myClient.SendData(CommandID.PowerSwitch, new byte[] { 3 });
+            myClient.SendData(CommandID.SetServoPosition, new byte[] { 128 });
+        }
+
         private void txtIP_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)

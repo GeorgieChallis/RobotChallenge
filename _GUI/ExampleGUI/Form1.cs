@@ -19,7 +19,10 @@ namespace Comms
         short magX; //Magnetometer Values
         short magY;
         short magZ;
-  
+        double magMax;
+        double magMin;
+        double compass;
+
         public Form1()
         {
             InitializeComponent();
@@ -78,7 +81,6 @@ namespace Comms
             {
                 leftPos = (short)((uint)e.RawMessage[6] | ((uint)e.RawMessage[5] << 8));
                 rightPos = (short)((uint)e.RawMessage[9] | ((uint)e.RawMessage[8] << 8));
-
             }
 
             if (e.RawMessage[3] == (byte)CommandID.GetAccelValue)
@@ -94,6 +96,9 @@ namespace Comms
                 magX = (short)(((int)e.RawMessage[4] << 8) | (int)e.RawMessage[5]);
                 magY = (short)(((int)e.RawMessage[6] << 8) | (int)e.RawMessage[7]);
                 magZ = (short)(((int)e.RawMessage[8] << 8) | (int)e.RawMessage[9]);
+                double magXN = magX - ((3000 + 3000) / 2);
+                double magYN = magY - ((3000 + 3000) / 2);
+                compass = Math.Atan2(magYN, magXN) * (180 / 3.14);
             }
         }
     
@@ -195,21 +200,6 @@ namespace Comms
             }
         }
 
-        private void button1_Click(object sender, EventArgs e) //Get Accel Button
-        {
-            if (!myClient.isConnected) return;
-            myClient.SendData(CommandID.GetAccelValue);
-
-            
-        }
-
-        private void button2_Click(object sender, EventArgs e) //Get Magnet Button
-        {
-            if (!myClient.isConnected) return;
-            myClient.SendData(CommandID.GetMagnetValue);
-
-        }
-
         private void timer1_Tick(object sender, EventArgs e)
         {
             label4.Text = accX.ToString(); //Update accelerometer values
@@ -219,11 +209,14 @@ namespace Comms
             label7.Text = magX.ToString(); //Update magnetometer values
             label8.Text = magY.ToString();
             label9.Text = magZ.ToString();
+            label10.Text = compass.ToString();
         }
 
         private void timer2_Tick(object sender, EventArgs e)
         {
-     
+            if (!myClient.isConnected) return;
+            myClient.SendData(CommandID.GetMagnetValue);
+                        myClient.SendData(CommandID.GetAccelValue);
         }
 
         private void label10_Click(object sender, EventArgs e)
@@ -276,7 +269,17 @@ namespace Comms
         {
 
         }
-       
+
+        private void label10_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox4_Enter(object sender, EventArgs e)
+        {
+
+        }
+
         private void txtIP_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)

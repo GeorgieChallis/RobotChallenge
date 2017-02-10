@@ -61,11 +61,17 @@ namespace Comms
             this.label10 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.timer3 = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -272,13 +278,14 @@ namespace Comms
             // 
             // timer2
             // 
+            this.timer2.Enabled = true;
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(576, 149);
+            this.button2.Location = new System.Drawing.Point(573, 177);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(145, 46);
+            this.button2.Size = new System.Drawing.Size(145, 38);
             this.button2.TabIndex = 11;
             this.button2.Text = "Move Forward";
             this.button2.UseVisualStyleBackColor = true;
@@ -286,9 +293,9 @@ namespace Comms
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(576, 198);
+            this.button3.Location = new System.Drawing.Point(573, 221);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(145, 45);
+            this.button3.Size = new System.Drawing.Size(145, 38);
             this.button3.TabIndex = 12;
             this.button3.Text = "Move Backward";
             this.button3.UseVisualStyleBackColor = true;
@@ -296,9 +303,9 @@ namespace Comms
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(576, 246);
+            this.button4.Location = new System.Drawing.Point(573, 265);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(145, 45);
+            this.button4.Size = new System.Drawing.Size(145, 38);
             this.button4.TabIndex = 13;
             this.button4.Text = "Move Left";
             this.button4.UseVisualStyleBackColor = true;
@@ -306,9 +313,9 @@ namespace Comms
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(576, 294);
+            this.button5.Location = new System.Drawing.Point(573, 309);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(145, 45);
+            this.button5.Size = new System.Drawing.Size(145, 38);
             this.button5.TabIndex = 14;
             this.button5.Text = "Move Right";
             this.button5.UseVisualStyleBackColor = true;
@@ -316,9 +323,9 @@ namespace Comms
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(576, 342);
+            this.button6.Location = new System.Drawing.Point(573, 353);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(145, 45);
+            this.button6.Size = new System.Drawing.Size(145, 60);
             this.button6.TabIndex = 15;
             this.button6.Text = "STOP";
             this.button6.UseVisualStyleBackColor = true;
@@ -360,18 +367,63 @@ namespace Comms
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Accelerometer Values:";
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(19, 24);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(112, 13);
+            this.label11.TabIndex = 20;
+            this.label11.Text = "DistanceToTravel(cm)";
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.button1);
+            this.groupBox6.Controls.Add(this.textBox1);
+            this.groupBox6.Controls.Add(this.label11);
+            this.groupBox6.Location = new System.Drawing.Point(12, 255);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(518, 158);
+            this.groupBox6.TabIndex = 21;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Precise Movement";
+            this.groupBox6.Enter += new System.EventHandler(this.groupBox6_Enter);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(151, 52);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(34, 23);
+            this.button1.TabIndex = 22;
+            this.button1.Text = "Go";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(22, 54);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(126, 20);
+            this.textBox1.TabIndex = 21;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
+            // timer3
+            // 
+            this.timer3.Tick += new System.EventHandler(this.timer3_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(762, 399);
-            this.Controls.Add(this.groupBox5);
-            this.Controls.Add(this.groupBox4);
+            this.ClientSize = new System.Drawing.Size(762, 435);
+            this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
+            this.Controls.Add(this.groupBox5);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.groupBox4);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -392,6 +444,8 @@ namespace Comms
             this.groupBox4.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -430,6 +484,11 @@ namespace Comms
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Timer timer3;
     }
 }
 

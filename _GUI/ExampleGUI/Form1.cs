@@ -19,9 +19,9 @@ namespace Comms
         short magX; //Magnetometer Values
         short magY;
         short magZ;
-        double magMax;
-        double magMin;
         double compass;
+
+        int distanceValue;
 
         public Form1()
         {
@@ -278,6 +278,41 @@ namespace Comms
         private void groupBox4_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void groupBox6_Enter(object sender, EventArgs e)
+        {
+}
+
+        private void button1_Click(object sender, EventArgs e) //Go button
+        {
+            if (distanceValue > 0)
+            {
+                timer2.Interval = (int)(distanceValue / 22.6); //interval being desired time for movement (t=s/v)
+                timer2.Enabled = true; //timer starts when value recognised in textbox
+                myClient.SendData(CommandID.SetMotorsSpeed, new byte[] { 60, 60 }); //rover moving forwards only
+            }
+
+            if (distanceValue < 0)
+            {
+                timer2.Interval = (int)(distanceValue / 22.6); //interval being desired time for movement (t=s/v)
+                timer2.Enabled = true; //timer starts when value recognised in textbox
+                myClient.SendData(CommandID.SetMotorsSpeed, new byte[] { 200, 200 }); //rover moving backwards only
+            }
+        }
+
+        private void timer3_Tick(object sender, EventArgs e)
+        {
+            distanceValue = 0;
+            myClient.SendData(CommandID.SetMotorsSpeed, new byte[] { 0, 0 });
+            timer2.Enabled = false;
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e) //used for entering distance to travel
+        {
+            // converting the text from the textbox to an int
+            distanceValue = Convert.ToInt32(textBox1.Text);
+            distanceValue = int.Parse(textBox1.Text);
         }
 
         private void txtIP_KeyPress(object sender, KeyPressEventArgs e)

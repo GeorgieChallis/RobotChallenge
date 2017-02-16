@@ -69,6 +69,7 @@ namespace Comms
             this.button7 = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
+            this.button8 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -378,6 +379,7 @@ namespace Comms
             this.label11.Size = new System.Drawing.Size(112, 13);
             this.label11.TabIndex = 20;
             this.label11.Text = "DistanceToTravel(cm)";
+            this.label11.Click += new System.EventHandler(this.label11_Click);
             // 
             // groupBox6
             // 
@@ -417,6 +419,7 @@ namespace Comms
             // 
             // timer3
             // 
+            this.timer3.Interval = 500;
             this.timer3.Tick += new System.EventHandler(this.timer3_Tick);
             // 
             // button7
@@ -449,11 +452,22 @@ namespace Comms
             this.label13.Text = "label13";
             this.label13.Click += new System.EventHandler(this.label13_Click);
             // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(609, 307);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(75, 23);
+            this.button8.TabIndex = 25;
+            this.button8.Text = "Graph";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(762, 419);
+            this.Controls.Add(this.button8);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.button7);
@@ -485,6 +499,11 @@ namespace Comms
             this.ResumeLayout(false);
             this.PerformLayout();
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            MoveBackward(200);
         }
 
 
@@ -529,6 +548,7 @@ namespace Comms
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Button button8;
     }
 }
 

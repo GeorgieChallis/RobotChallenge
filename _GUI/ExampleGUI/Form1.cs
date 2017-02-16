@@ -98,9 +98,14 @@ namespace Comms
                 magX = (short)(((int)e.RawMessage[4] << 8) | (int)e.RawMessage[5]);
                 magY = (short)(((int)e.RawMessage[6] << 8) | (int)e.RawMessage[7]);
                 magZ = (short)(((int)e.RawMessage[8] << 8) | (int)e.RawMessage[9]);
-                double magXN = magX - ((3000 + 3000) / 2);
-                double magYN = magY - ((3000 + 3000) / 2);
+                double magXN = magX - ((-931 + -1507) / 2);
+                double magYN = magY - ((2947 + 2320) / 2);
                 compass = Math.Atan2(magYN, magXN) * (180 / 3.14);
+                if(compass<0)
+                {
+                    compass = compass + 360;
+                }
+               
             }
         }
     
@@ -211,7 +216,7 @@ namespace Comms
             label7.Text = magX.ToString(); //Update magnetometer values
             label8.Text = magY.ToString();
             label9.Text = magZ.ToString();
-            label10.Text = compass.ToString();
+            label10.Text = compass.ToString("N0");
         }
 
         private void timer2_Tick(object sender, EventArgs e) //Constantly update readings
@@ -227,18 +232,36 @@ namespace Comms
         }
 
         //Move forward button
-        private void button2_Click_1(object sender, EventArgs e) 
+        private void button2_Click_1(object sender, EventArgs e)  
         {
-            myClient.SendData(CommandID.MotorSpeedClosed, new byte[] { 60, 0, 60, 0, 1 }); 
-                                                    //SpeedL, 0, SpeedR, 0, 1 to call closedloop
-            robotIsMoving = true;
+            timer3.Enabled = true;
+            MoveForward(1000); //Arbitrary value to get it to move, can be changed
         }
 
-        //Move down
-        private void button3_Click(object sender, EventArgs e)
+        public bool MoveForward(int inputTime) 
         {
-            myClient.SendData(CommandID.MotorSpeedClosed, new byte[] { 200, 0, 200, 0, 1 });
+            timer3.Interval = inputTime;
+            myClient.SendData(CommandID.MotorSpeedClosed, new byte[] { 59, 0, 61, 0, 1 });
+            //SpeedL, 0, SpeedR, 0, 1 to call closedloop
             robotIsMoving = true;
+            return robotIsMoving;
+        }
+
+        public bool MoveBackward(int inputTime)
+        {
+            timer3.Interval = inputTime;
+            myClient.SendData(CommandID.MotorSpeedClosed, new byte[] { 200, 0, 200, 0, 1 });
+            //SpeedL, 0, SpeedR, 0, 1 to call closedloop
+            robotIsMoving = true;
+            return robotIsMoving;
+        }
+
+        public bool StopMoving()
+        {
+
+            myClient.SendData(CommandID.MotorSpeedClosed, new byte[] { 0, 0, 0, 0, 1 });
+            robotIsMoving = false;
+            return robotIsMoving;
         }
 
         //Move left
@@ -258,8 +281,7 @@ namespace Comms
         //Stop
         private void button6_Click(object sender, EventArgs e)
         {
-            myClient.SendData(CommandID.MotorSpeedClosed, new byte[] { 0, 0, 0, 0, 1 });
-            robotIsMoving = false;
+            StopMoving();
         }
 
         private void lblPosLeft_Click(object sender, EventArgs e)
@@ -287,24 +309,20 @@ namespace Comms
         {
             if (distanceValue > 0)
             {
-                timer2.Interval = (int)(distanceValue / 22.6); //interval being desired time for movement (t=s/v)
-                timer2.Enabled = true; //timer starts when value recognised in textbox
-                myClient.SendData(CommandID.SetMotorsSpeed, new byte[] { 60, 60 }); //rover moving forwards only
+                timer3.Enabled = true;
+                MoveForward(distanceValue);
             }
-
             if (distanceValue < 0)
             {
-                timer2.Interval = (int)(distanceValue / 22.6); //interval being desired time for movement (t=s/v)
-                timer2.Enabled = true; //timer starts when value recognised in textbox
-                myClient.SendData(CommandID.SetMotorsSpeed, new byte[] { 200, 200 }); //rover moving backwards only
+                timer3.Enabled = true;
+                MoveBackward(distanceValue*(-1));
             }
         }
 
         private void timer3_Tick(object sender, EventArgs e)
         {
-            distanceValue = 0;
-            myClient.SendData(CommandID.SetMotorsSpeed, new byte[] { 0, 0 });
-            timer2.Enabled = false;
+            timer3.Enabled = false;
+            StopMoving();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e) //used for entering distance to travel
@@ -337,6 +355,23 @@ namespace Comms
         }
 
         private void label13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            int n;
+            for(n=0; n<10000; n++)
+    
+            {
+                System.IO.StreamWriter file1 = new System.IO.StreamWriter("file.txt", true);
+                file1.WriteLine(magX + "," + magY + "," + magZ + "," + ",");
+                file1.Close();
+            }
+        }
+
+        private void label11_Click(object sender, EventArgs e)
         {
 
         }

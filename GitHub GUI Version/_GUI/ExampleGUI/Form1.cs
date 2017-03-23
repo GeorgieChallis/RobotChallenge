@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using CommsLib;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 
 
@@ -20,6 +21,7 @@ namespace Comms
         //----STATE SELECTION - Enum used to track which task has been selected. Set by buttons
         enum taskState { Idle, SpatialVortex, LightTunnel, SeismicActivity, WeighObjects, DrawStar };
         int currentState = (int)taskState.Idle;
+       
 
         //----Buttons for state selection
         private void button7_Click(object sender, EventArgs e) //Spatial Vortex Button
@@ -31,6 +33,7 @@ namespace Comms
         private void button8_Click_2(object sender, EventArgs e) //Light Tunnel Button
         {
             currentState = (int)taskState.LightTunnel;
+            LightTunnel();
         }
 
         private void button10_Click(object sender, EventArgs e) //Seismic Activity Button
@@ -42,21 +45,22 @@ namespace Comms
         private void button11_Click(object sender, EventArgs e) //Weigh Objects Button
         {
             currentState = (int)taskState.WeighObjects;
+            WeighObjects();
         }
 
         private void button12_Click(object sender, EventArgs e) //Draw Star Button
         {
             currentState = (int)taskState.DrawStar;
+            DrawStar();
         }
 
-
+        
         //----- GLOBAL VARIABLES
         // Accelerometer Values:
         int accX, accY, accZ;
 
         //Magnetometer Values:
         short magX, magY, magZ;
-        double magMax, magMin;
         double compass = 0;
 
         //Movement variables:
@@ -82,6 +86,10 @@ namespace Comms
         //Spatial Vortex Variables
         bool sampleSpatial = false;
         List<double> magValues = new List<double>();
+        int turnCt;
+
+        //Drawing Star Variables
+        bool penUp;
 
         //----- MYCLIENT CODE - DO NOT DELETE!
         public Form1()
@@ -90,7 +98,7 @@ namespace Comms
             myClient = new TCPClient();
             myClient.OnMessageReceived += new ClientBase.ClientMessageReceivedEvent(myClient_OnMessageReceived);
 
-            myRequestTimer = new Timer();
+            myRequestTimer = new System.Windows.Forms.Timer();
             myRequestTimer.Interval = 100; //**Changed from 500
             myRequestTimer.Tick += new EventHandler(myRequestTimer_Tick);
         }
@@ -196,15 +204,17 @@ namespace Comms
                     compass = compass + 360;
                 }
                 magValues.Add(compass);
-                //StreamWriter file1 = new StreamWriter("C:\\Users\\Georgina\\Desktop\\Robotics Challenge HHA\\GCSpatialVortex.txt", true);
-                //file1.WriteLine(compass);
-                //file1.Close();
-
             }
+
+            if (e.RawMessage[3] == (byte)CommandID.GetLightAuxValue)
+            {
+                light = (uint)(e.RawMessage[5]) | ((uint)e.RawMessage[4] << 8);
+            }
+
         }
 
-    //----- MY REQUEST TIMER
-        Timer myRequestTimer;
+        //----- MY REQUEST TIMER
+        System.Windows.Forms.Timer myRequestTimer;
         void myRequestTimer_Tick(object sender, EventArgs e)
         {
             if (!myClient.isConnected) return; //if no connection, don't do anything
@@ -212,6 +222,8 @@ namespace Comms
             //we will request the status of the LEDs on a regular basis
             myClient.SendData(CommandID.GetLEDandSwitchStatus); //this type needs no payload
             myClient.SendData(CommandID.MotorPosition);
+
+            myClient.SendData(CommandID.GetLightAuxValue); //for light tunnel
 
             lblPosLeft.Text = leftPos.ToString(); //Update position values
             lblPosRight.Text = rightPos.ToString();
@@ -307,9 +319,6 @@ namespace Comms
 
         private void timer2_Tick(object sender, EventArgs e) //Constantly update readings
         {
-            if (!myClient.isConnected) return;
-           // myClient.SendData(CommandID.GetMagnetValue);
-           // myClient.SendData(CommandID.GetAccelValue);
         }
 
    //----- MOVEMENT VIA BUTTON PRESSES
@@ -499,10 +508,15 @@ namespace Comms
         {
             sampleSeismic = !sampleSeismic;
             myClient.SendData(CommandID.SeismicActivity);
-            if (sampleSeismic == true) label4.Text = "Running...";
+            if (sampleSeismic == true)
+            {
+                label4.Text = "Running...";
+                button10.BackColor = Color.ForestGreen;
+            }
             else
             {
                 label4.Text = "Idle";
+                button10.BackColor = Color.Empty;
 
                 object res; //dummy object to staisfy the needs of matlab
                 matlab = new MLApp.MLApp();
@@ -517,20 +531,172 @@ namespace Comms
         {
             sampleSpatial = !sampleSpatial;
             myClient.SendData(CommandID.SpatialVortex);
+            button13.Enabled = true;
             if (sampleSpatial == true) label5.Text = "Running...";
             else
             {
                 label5.Text = "Idle";
-
-                object res; //dummy object to staisfy the needs of matlab
-                matlab = new MLApp.MLApp();
-                matlab.Execute("C:\\Program Files\\MATLAB\\R2015b\\bin\\matlab.exe");
-                matlab.Feval("SeismicFFT", 0, out res);
             }
         }
 
-    //----- EMPTY METHODS (LABELS ETC)
-    private void textBox1_TextChanged(object sender, EventArgs e) //used for entering distance to travel
+        void GetTurns()
+        {
+            int initial;
+            bool started = true;
+
+            initial = (int)magValues[0]; //bearing rover started at
+            for (int i = 0; i < magValues.Count; i++)   //goes through the list of values
+            {
+                if (!started)
+                {
+                    if (magValues[i] < initial - 10 || magValues[i] > +10) //if the robot has started moving
+                    { started = true;}
+                }
+                else
+                {
+                    if (initial < magValues[i] + 0.5 && initial > magValues[i] - 0.5) //if done full spin
+                    { turnCt++;}
+                }
+            }
+        }
+
+    // LIGHT TUNNEL FUNCTION HERE
+        void LightTunnel() {
+            button14.Enabled = true;
+            button15.Enabled = true;
+            button17.Enabled = true;
+            
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            travel = 0; //needed to add this to stop it freezing
+            listView1.Items.Add(light.ToString());
+            timer1.Enabled = true;
+            if (forward) // Move forwards
+            {
+                myClient.SendData(CommandID.SetMotorsSpeed, new byte[] { 19, 19 });
+            }
+            else // Move backwards thru tunnel again
+            {
+                myClient.SendData(CommandID.SetMotorsSpeed, new byte[] { 200, 200 });
+            }
+            robotIsMoving = true;
+            sw.Start();
+            // 18.56s, 18.54s, 18.62s, distance 183cm. for 19, 19, speed = 9.86 cm/s
+
+            // Summary - when detect is pressed, rover moves 
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            //Stopwatch sw = new Stopwatch(); - moved to global
+            //sw.Start(); //starts the timer
+
+            double time_spent = sw.Elapsed.TotalSeconds; //time spent used to relate to distance
+            label8.Text = time_spent.ToString();
+            travel = (int)(7.1f * time_spent); //distance = 9.86cmPerSec * time
+            label7.Text = travel.ToString();
+
+            label9.Text = light.ToString();
+            LightChart.Series["Series1"].Points.AddY(light); // Record all measurements n the chart
+                                                             //Summary - every 0.5s light levels are compared to see if theres an LED  /lastlight assigned to current light for comparison at the next tick
+            if ((light < last_light) && (light_index < 10) && (got_max == false))
+            {
+                light_peak[light_index] = (uint)travel; // Store this Maximum
+                if (forward) // Print the forward max values
+                {
+                    listView1.Items.Add(light_peak[light_index].ToString());
+                    listView1.Items.Add(last_light.ToString());
+                }
+                else// Print the backward max values
+                {
+                    listView2.Items.Add(light_peak[light_index].ToString());
+                    listView2.Items.Add(last_light.ToString());
+                }
+
+                light_index += 1; // Get ready for next max
+                got_max = true; // Make sure we don't record all decreases, see "if" below
+            }
+
+            if ((light > last_light) && (got_max == true))
+            {
+                got_max = false; // Set state if light is increasing to run the "if" above
+            }
+            last_light = light;
+            if (travel > 153) // Stop if we've done 2 metres 
+            {
+                StopMoving();
+                sw.Stop(); //Stop Moving, stop the timer
+                sw.Reset();
+                timer1.Enabled = false; //stop ticking ready for next button press 
+                forward = false;
+            }
+        }
+
+        private void CreateMyListView()
+        {
+            ListView listView1 = new ListView();
+            ListView listview2 = new ListView();
+        }
+
+        private double[] ligthArray = new double[30]; //as above
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            myClient.SendData(CommandID.SetMotorsSpeed, new byte[] { 19, 19 }); //motor speed to travel at 9.86cm/s
+            robotIsMoving = true;
+            System.Threading.Thread.Sleep(500);
+            StopMoving();
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            LightChart.Series["Series1"].Points.Clear(); // Clear the chart
+        }
+
+        // WEIGH OBJECTS FUNCTION HERE
+        void WeighObjects() {
+
+        }
+     // DRAW STAR FUNCTION HERE
+        void DrawStar() {
+            button16.Enabled = true;
+        }
+
+        private void penUP()
+        {
+            if (!myClient.isConnected) return;
+            myClient.SendData(CommandID.PowerSwitch, new byte[] { 3 }); //Switches pen servo on
+            myClient.SendData(CommandID.SetServoPosition, new byte[] { 80 });
+        }
+        private void penDOWN()
+        {
+            if (!myClient.isConnected) return;
+            myClient.SendData(CommandID.PowerSwitch, new byte[] { 3 }); //Switches pen servo on
+            myClient.SendData(CommandID.SetServoPosition, new byte[] { 225 });
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            if (!myClient.isConnected) return;
+            myClient.SendData(CommandID.PowerSwitch, new byte[] { 3 }); //Switches pen servo on
+
+            if (penUp)
+            {
+                penUP();
+                //label13.Text = "Up";
+            }
+            else
+            {
+                penDOWN();
+                //label13.Text = "Down";
+            }
+            penUp = !penUp;
+        }
+
+        //----- EMPTY METHODS (LABELS ETC)
+        private void textBox1_TextChanged(object sender, EventArgs e) //used for entering distance to travel
         {
             // converting the text from the textbox to an int
 
@@ -568,6 +734,16 @@ namespace Comms
         }
 
         private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chart1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox4_Enter_1(object sender, EventArgs e)
         {
 
         }

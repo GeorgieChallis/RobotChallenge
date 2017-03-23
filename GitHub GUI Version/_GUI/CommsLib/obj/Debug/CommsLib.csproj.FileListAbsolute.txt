@@ -61,3 +61,8 @@ C:\Users\Georgina\Downloads\GitHub GUI Version\_GUI\CommsLib\bin\Debug\CommsLib.
 C:\Users\Georgina\Downloads\GitHub GUI Version\_GUI\CommsLib\obj\Debug\CommsLib.dll
 C:\Users\Georgina\Downloads\GitHub GUI Version\_GUI\CommsLib\obj\Debug\CommsLib.pdb
 C:\Users\Georgina\Downloads\GitHub GUI Version\_GUI\CommsLib\obj\Debug\CommsLib.csprojResolveAssemblyReference.cache
+E:\GitHub-GUI-Version-Euans-update\GitHub GUI Version\_GUI\CommsLib\bin\Debug\CommsLib.dll
+E:\GitHub-GUI-Version-Euans-update\GitHub GUI Version\_GUI\CommsLib\bin\Debug\CommsLib.pdb
+E:\GitHub-GUI-Version-Euans-update\GitHub GUI Version\_GUI\CommsLib\obj\Debug\CommsLib.csprojResolveAssemblyReference.cache
+E:\GitHub-GUI-Version-Euans-update\GitHub GUI Version\_GUI\CommsLib\obj\Debug\CommsLib.dll
+E:\GitHub-GUI-Version-Euans-update\GitHub GUI Version\_GUI\CommsLib\obj\Debug\CommsLib.pdb

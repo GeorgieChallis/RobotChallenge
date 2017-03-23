@@ -88,8 +88,10 @@ namespace Comms
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -507,6 +509,7 @@ namespace Comms
             this.LightChart.Size = new System.Drawing.Size(357, 294);
             this.LightChart.TabIndex = 41;
             this.LightChart.Text = "chart1";
+            this.LightChart.Click += new System.EventHandler(this.LightChart_Click);
             // 
             // button14
             // 
@@ -631,6 +634,7 @@ namespace Comms
             // 
             // groupBox8
             // 
+            this.groupBox8.Controls.Add(this.label10);
             this.groupBox8.Controls.Add(this.button8);
             this.groupBox8.Controls.Add(this.LightChart);
             this.groupBox8.Controls.Add(this.listView1);
@@ -647,6 +651,16 @@ namespace Comms
             this.groupBox8.TabIndex = 53;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Light Tunnel";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(19, 28);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(41, 13);
+            this.label10.TabIndex = 49;
+            this.label10.Text = "label10";
+            this.label10.Click += new System.EventHandler(this.label10_Click_2);
             // 
             // groupBox9
             // 
@@ -678,6 +692,11 @@ namespace Comms
             this.groupBox10.TabIndex = 55;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Precise Movement";
+            // 
+            // timer2
+            // 
+            this.timer2.Enabled = true;
+            this.timer2.Tick += new System.EventHandler(this.timer2_Tick_1);
             // 
             // Form1
             // 
@@ -788,6 +807,8 @@ namespace Comms
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.GroupBox groupBox9;
         private System.Windows.Forms.GroupBox groupBox10;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Timer timer2;
     }
 }
 

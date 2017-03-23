@@ -319,6 +319,7 @@ namespace Comms
 
         private void timer2_Tick(object sender, EventArgs e) //Constantly update readings
         {
+            
         }
 
    //----- MOVEMENT VIA BUTTON PRESSES
@@ -579,23 +580,25 @@ namespace Comms
             }
             else // Move backwards thru tunnel again
             {
-                myClient.SendData(CommandID.SetMotorsSpeed, new byte[] { 200, 200 });
+                myClient.SendData(CommandID.SetMotorsSpeed, new byte[] { 235, 235 });
             }
             robotIsMoving = true;
             sw.Start();
-            // 18.56s, 18.54s, 18.62s, distance 183cm. for 19, 19, speed = 9.86 cm/s
-
             // Summary - when detect is pressed, rover moves 
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            //Stopwatch sw = new Stopwatch(); - moved to global
-            //sw.Start(); //starts the timer
-
             double time_spent = sw.Elapsed.TotalSeconds; //time spent used to relate to distance
             label8.Text = time_spent.ToString();
-            travel = (int)(7.1f * time_spent); //distance = 9.86cmPerSec * time
+            if (forward) //speed for forwards
+            {
+                travel = (int)(10f * time_spent); //distance = speed * time
+            }
+            else //speed for backwards
+            {
+                travel = (int)(11.2f * time_spent); //distance = speed * time
+            }
             label7.Text = travel.ToString();
 
             label9.Text = light.ToString();
@@ -624,7 +627,7 @@ namespace Comms
                 got_max = false; // Set state if light is increasing to run the "if" above
             }
             last_light = light;
-            if (travel > 153) // Stop if we've done 2 metres 
+            if (travel > 160) // Stop if we've done 2 metres 
             {
                 StopMoving();
                 sw.Stop(); //Stop Moving, stop the timer
@@ -744,6 +747,21 @@ namespace Comms
         }
 
         private void groupBox4_Enter_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LightChart_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void timer2_Tick_1(object sender, EventArgs e)
+        {
+            label10.Text = light.ToString();
+        }
+
+        private void label10_Click_2(object sender, EventArgs e)
         {
 
         }

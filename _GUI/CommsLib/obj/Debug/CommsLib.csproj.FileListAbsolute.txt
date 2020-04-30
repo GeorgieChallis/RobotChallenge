@@ -42,3 +42,27 @@ C:\Users\Georgina\Downloads\Robot_Challenge-master\Robot_Challenge-master\_GUI\C
 C:\Users\Georgina\Downloads\Robot_Challenge-master\Robot_Challenge-master\_GUI\CommsLib\obj\Debug\CommsLib.csprojResolveAssemblyReference.cache
 C:\Users\Georgina\Downloads\Robot_Challenge-master\Robot_Challenge-master\_GUI\CommsLib\obj\Debug\CommsLib.dll
 C:\Users\Georgina\Downloads\Robot_Challenge-master\Robot_Challenge-master\_GUI\CommsLib\obj\Debug\CommsLib.pdb
+N:\My Documents\Robot_Challenge\_GUI\CommsLib\bin\Debug\CommsLib.dll
+N:\My Documents\Robot_Challenge\_GUI\CommsLib\bin\Debug\CommsLib.pdb
+N:\My Documents\Robot_Challenge\_GUI\CommsLib\obj\Debug\CommsLib.dll
+N:\My Documents\Robot_Challenge\_GUI\CommsLib\obj\Debug\CommsLib.pdb
+C:\Users\Georgina\Downloads\Robot_Challenge-master(Ben)\Robot_Challenge-master\_GUI\CommsLib\bin\Debug\CommsLib.dll
+C:\Users\Georgina\Downloads\Robot_Challenge-master(Ben)\Robot_Challenge-master\_GUI\CommsLib\bin\Debug\CommsLib.pdb
+C:\Users\Georgina\Downloads\Robot_Challenge-master(Ben)\Robot_Challenge-master\_GUI\CommsLib\obj\Debug\CommsLib.csprojResolveAssemblyReference.cache
+C:\Users\Georgina\Downloads\Robot_Challenge-master(Ben)\Robot_Challenge-master\_GUI\CommsLib\obj\Debug\CommsLib.dll
+C:\Users\Georgina\Downloads\Robot_Challenge-master(Ben)\Robot_Challenge-master\_GUI\CommsLib\obj\Debug\CommsLib.pdb
+C:\Users\User\Documents\Visual Studio 2015\Projects\_GUI\CommsLib\bin\Debug\CommsLib.dll
+C:\Users\User\Documents\Visual Studio 2015\Projects\_GUI\CommsLib\bin\Debug\CommsLib.pdb
+C:\Users\User\Documents\Visual Studio 2015\Projects\_GUI\CommsLib\obj\Debug\CommsLib.csprojResolveAssemblyReference.cache
+C:\Users\User\Documents\Visual Studio 2015\Projects\_GUI\CommsLib\obj\Debug\CommsLib.dll
+C:\Users\User\Documents\Visual Studio 2015\Projects\_GUI\CommsLib\obj\Debug\CommsLib.pdb
+C:\Users\Georgina\Downloads\GitHub GUI Version\_GUI\CommsLib\bin\Debug\CommsLib.dll
+C:\Users\Georgina\Downloads\GitHub GUI Version\_GUI\CommsLib\bin\Debug\CommsLib.pdb
+C:\Users\Georgina\Downloads\GitHub GUI Version\_GUI\CommsLib\obj\Debug\CommsLib.dll
+C:\Users\Georgina\Downloads\GitHub GUI Version\_GUI\CommsLib\obj\Debug\CommsLib.pdb
+C:\Users\Georgina\Downloads\GitHub GUI Version\_GUI\CommsLib\obj\Debug\CommsLib.csprojResolveAssemblyReference.cache
+E:\GitHub-GUI-Version-Euans-update\GitHub GUI Version\_GUI\CommsLib\bin\Debug\CommsLib.dll
+E:\GitHub-GUI-Version-Euans-update\GitHub GUI Version\_GUI\CommsLib\bin\Debug\CommsLib.pdb
+E:\GitHub-GUI-Version-Euans-update\GitHub GUI Version\_GUI\CommsLib\obj\Debug\CommsLib.csprojResolveAssemblyReference.cache
+E:\GitHub-GUI-Version-Euans-update\GitHub GUI Version\_GUI\CommsLib\obj\Debug\CommsLib.dll
+E:\GitHub-GUI-Version-Euans-update\GitHub GUI Version\_GUI\CommsLib\obj\Debug\CommsLib.pdb

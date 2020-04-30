@@ -19,7 +19,7 @@ namespace CommsLib
         SetMotorsSpeed = 0x07,
         LineFollowingData = 0x08,
         SetLineThresholds = 0x09,
-        GetLightAuxValue = 0x11,
+        GetLightAuxValue = 0x1F,
         SetServoPosition = 0x16,
         GetTermData = 0x1B,
         GetCrashedRoverData = 0x1C,
@@ -40,5 +40,7 @@ namespace CommsLib
         DRIVE_MAX_SPEED = 0xC8,
         MotorSpeedClosed = 0x38, //closed loop motor speed 
         PowerSwitch = 0x15, //Turn servo power on or off
+        SeismicActivity = 0x3B, // Seismic Activity Command
+        SpatialVortex = 0x3C //Spatial Vortex Command
     };
 }
